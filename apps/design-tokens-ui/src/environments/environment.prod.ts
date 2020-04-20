@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+export const environment = {
+  production: true,
+};

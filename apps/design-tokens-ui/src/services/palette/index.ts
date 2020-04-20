@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+export * from './palette.module';
+export * from './palette-source.service';

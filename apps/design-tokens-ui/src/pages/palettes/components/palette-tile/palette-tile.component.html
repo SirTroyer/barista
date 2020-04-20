@@ -1,0 +1,17 @@
+<a
+  class="tk-color-tile-content"
+  [style.--background-color]="keyColor"
+  [style.--text-color]="_textColor"
+  [style.--border-color]="borderColor"
+  [routerLink]="paletteSource.name"
+>
+  <div class="tk-color-tile-title">{{ paletteSource.name }}</div>
+  <div class="tk-color-palette-preview">
+    <span
+      *ngFor="let shade of paletteSource.shades; index as i"
+      class="tk-palette-shade"
+      [style.--color]="_contrastColors[i]"
+      [title]="shade.name"
+    ></span>
+  </div>
+</a>

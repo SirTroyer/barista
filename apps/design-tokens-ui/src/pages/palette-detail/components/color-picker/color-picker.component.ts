@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+@Component({
+  selector: 'tk-color-picker',
+  templateUrl: './color-picker.component.html',
+  styleUrls: ['./color-picker.component.scss'],
+})
+export class ColorPickerComponent {
+  /** Current color */
+  @Input() color: string = '';
+
+  /** Invoked when the color has changed */
+  @Output() colorChange: EventEmitter<string> = new EventEmitter<string>();
+}

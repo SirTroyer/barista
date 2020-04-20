@@ -1,0 +1,24 @@
+<dt-top-bar-navigation aria-label="Additional options">
+  <dt-top-bar-navigation-item align="start">
+    <button dtTopBarAction (click)="_yamlExport()">
+      <dt-icon name="backup"></dt-icon>
+      <span i18n>Export as YAML</span>
+    </button>
+  </dt-top-bar-navigation-item>
+</dt-top-bar-navigation>
+
+<div class="tk-palette-tile-grid">
+  <tk-palette-tile
+    [paletteSource]="paletteSource"
+    *ngFor="let paletteSource of paletteAliases"
+  ></tk-palette-tile>
+  <button
+    dt-button
+    (click)="_addPalette()"
+    variant="secondary"
+    class="tk-add-palette"
+  >
+    <dt-icon name="plus-add"></dt-icon>
+    <span i18n>Add new palette</span>
+  </button>
+</div>

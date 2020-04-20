@@ -313,7 +313,11 @@
       "tags": ["type:tooling", "type:shared"]
     },
     "shared-design-tokens": {
-      "tags": []
+      "tags": ["type:shared", "type:library"]
+    },
+    "design-tokens-ui": {
+      "tags": ["type:app"],
+      "implicitDependencies": ["shared-design-tokens"]
     }
   }
 }

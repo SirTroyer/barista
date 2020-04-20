@@ -1,0 +1,156 @@
+<div class="tk-area-panel tk-settings-area">
+  <h3 i18n>Palette Settings</h3>
+
+  <div class="tk-setting tk-labelled-input">
+    <label class="tk-settings-label" i18n>Name</label>
+    <input type="text" dtInput [(ngModel)]="_palette.name" aria-label="Name" />
+  </div>
+
+  <div class="tk-setting tk-labelled-color">
+    <tk-color-picker
+      [(color)]="keyColor"
+      (colorChange)="_calculateContrastColors()"
+    ></tk-color-picker>
+    <label class="tk-settings-label" i18n>Key color</label>
+  </div>
+
+  <div class="tk-setting tk-labelled-color">
+    <tk-color-picker
+      [(color)]="_palette.baseColor"
+      (colorChange)="_calculateContrastColors()"
+    ></tk-color-picker>
+    <label class="tk-settings-label" i18n>Base color</label>
+  </div>
+
+  <div class="tk-setting tk-labelled-input">
+    <label class="settings-label" id="color-space-interpolation" i18n
+      >Color space interpolation</label
+    >
+    <dt-select
+      [(ngModel)]="_palette.colorspace"
+      (ngModelChange)="_calculateContrastColors()"
+      aria-labelledby="color-space-interpolation"
+    >
+      <dt-option value="CAM02">CIECAM02</dt-option>
+      <dt-option value="HSLuv">HSLuv</dt-option>
+    </dt-select>
+  </div>
+
+  <div class="tk-button-header">
+    <h3 i18n>Shades</h3>
+
+    <span class="tk-grouped-buttons">
+      <button
+        dt-button
+        variant="secondary"
+        color="gray"
+        (click)="_addShade()"
+        i18n
+      >
+        <dt-icon name="plus-add"></dt-icon>
+        Add
+      </button>
+      <button dt-button variant="secondary" i18n (click)="_sortShades()">
+        <dt-icon name="sorter-down"></dt-icon>
+        Sort
+      </button>
+    </span>
+  </div>
+
+  <dt-expandable-section
+    *ngFor="let shade of _palette.shades; index as i"
+    class="tk-shades-list"
+  >
+    <dt-expandable-section-header>
+      <span class="tk-header-left--wrapper">
+        <span
+          class="tk-color-preview"
+          [style.background-color]="_contrastColors[i]"
+        ></span>
+        {{ shade.name }} ({{ shade.ratio }})
+      </span>
+
+      <button dt-icon-button variant="nested" (click)="_deleteShade(shade)">
+        <dt-icon name="delete"></dt-icon>
+      </button>
+    </dt-expandable-section-header>
+
+    <div class="tk-setting">
+      <label class="tk-settings-label" i18n>Name</label>
+      <input type="text" dtInput [(ngModel)]="shade.name" aria-label="Name" />
+    </div>
+
+    <div class="tk-setting">
+      <label class="tk-settings-label" i18n>Contrast ratio</label>
+      <input
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        dtInput
+        [(ngModel)]="shade.ratio"
+        (ngModelChange)="_calculateContrastColors()"
+        aria-label="Contrast ratio"
+      />
+    </div>
+
+    <div class="tk-setting">
+      <label class="tk-settings-label" i18n>Alias</label>
+      <input
+        type="text"
+        dtInput
+        [(ngModel)]="shade.aliasName"
+        aria-label="Contrast ratio"
+      />
+    </div>
+
+    <div class="tk-setting">
+      <label class="tk-settings-label" i18n>Comment</label>
+      <input
+        type="text"
+        dtInput
+        [(ngModel)]="shade.comment"
+        aria-label="Contrast ratio"
+      />
+    </div>
+  </dt-expandable-section>
+
+  <h3>Other options</h3>
+  <div class="tk-grouped-buttons">
+    <a
+      dt-button
+      variant="secondary"
+      [href]="leonardoUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <dt-icon name="externallink"></dt-icon>
+      <span i18n>Open in Adobe Leonardo</span>
+    </a>
+    <button
+      dt-button
+      (click)="_deletePalette()"
+      (blur)="_resetDeletePaletteConfirmation()"
+    >
+      <dt-icon name="delete"></dt-icon>
+      <span *ngIf="!_showDeletePaletteConfirmation" i18n>Delete Palette</span>
+      <span *ngIf="_showDeletePaletteConfirmation" i18n>Are you sure?</span>
+    </button>
+  </div>
+</div>
+
+<div class="tk-preview-area--wrapper">
+  <div class="tk-area-panel tk-preview-area">
+    <ng-container *ngFor="let contrastColor of _contrastColors">
+      <tk-color-preview
+        [style.--foreground-color]="contrastColor"
+        [style.--background-color]="_palette.baseColor"
+      >
+      </tk-color-preview>
+      <tk-color-preview
+        [style.--foreground-color]="_palette.baseColor"
+        [style.--background-color]="contrastColor"
+      >
+      </tk-color-preview>
+    </ng-container>
+  </div>
+</div>

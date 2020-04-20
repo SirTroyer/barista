@@ -1,0 +1,132 @@
+{
+  "aliases": {
+    "spacing--xxx-large": {
+      "value": "128px"
+    },
+    "spacing--x-large": {
+      "value": "48px"
+    },
+    "spacing--small": {
+      "value": "8px"
+    },
+    "spacing--0": {
+      "value": 0
+    },
+    "spacing--x-small": {
+      "value": "4px"
+    },
+    "spacing--xx-large": {
+      "value": "64px"
+    },
+    "spacing--medium": {
+      "value": "16px"
+    },
+    "spacing--large": {
+      "value": "32px"
+    },
+    "spacing--xx-small": {
+      "value": "2px"
+    }
+  },
+  "props": {
+    "fluid-spacing--0": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--0",
+      "value": "0",
+      "meta": {
+        "friendlyName": "No spacing",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--0}"
+    },
+    "fluid-spacing--xx-small": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--xx-small",
+      "value": "2px",
+      "meta": {
+        "friendlyName": "Spacing, xx-small",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--xx-small}"
+    },
+    "fluid-spacing--x-small": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--x-small",
+      "value": "4px",
+      "meta": {
+        "friendlyName": "Spacing, x-small",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--x-small}"
+    },
+    "fluid-spacing--small": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--small",
+      "value": "8px",
+      "meta": {
+        "friendlyName": "Spacing, small",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--small}"
+    },
+    "fluid-spacing--medium": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--medium",
+      "value": "16px",
+      "meta": {
+        "friendlyName": "Spacing, medium",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--medium}"
+    },
+    "fluid-spacing--large": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--large",
+      "value": "32px",
+      "meta": {
+        "friendlyName": "Spacing, large",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--large}"
+    },
+    "fluid-spacing--x-large": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--x-large",
+      "value": "48px",
+      "meta": {
+        "friendlyName": "Spacing, x-large",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--x-large}"
+    },
+    "fluid-spacing--xx-large": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--xx-large",
+      "value": "64px",
+      "meta": {
+        "friendlyName": "Spacing, xx-large",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--xx-large}"
+    },
+    "fluid-spacing--xxx-large": {
+      "type": "number",
+      "category": "spacing",
+      "name": "fluid-spacing--xxx-large",
+      "value": "128px",
+      "meta": {
+        "friendlyName": "Spacing, xxx-large",
+        "customizable": false
+      },
+      "originalValue": "{!spacing--xxx-large}"
+    }
+  }
+}

@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+import { Component } from '@angular/core';
+@Component({
+  selector: 'tk-color-preview',
+  templateUrl: './color-preview.component.html',
+  styleUrls: ['./color-preview.component.scss'],
+})
+export class ColorPreviewComponent {}

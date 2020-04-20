@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+import 'jest-preset-angular';

@@ -1,0 +1,44 @@
+<dt-sidenav-container>
+  <dt-sidenav #sidenav mode="side" opened>
+    <dt-sidenav-header>
+      <div class="tk-sidenav-title">
+        <dt-icon class="tk-sidenav-title-image" name="color"></dt-icon>
+        Design Tokens
+      </div>
+    </dt-sidenav-header>
+    <dt-menu>
+      <a routerLink="/palette" routerLinkActive dtMenuItem>Palettes</a>
+    </dt-menu>
+  </dt-sidenav>
+
+  <dt-top-bar-navigation
+    aria-label="Main navigation"
+    class="tk-nav"
+    *ngIf="!sidenav.opened || _breadcrumbs.length > 1"
+  >
+    <dt-top-bar-navigation-item *ngIf="!sidenav.opened" align="start">
+      <button class="tk-top-bar-button" (click)="sidenav.open()">
+        <dt-icon name="menu-hamburger"></dt-icon>
+      </button>
+    </dt-top-bar-navigation-item>
+    <dt-top-bar-navigation-item class="tk-breadcrumbs">
+      <dt-breadcrumbs
+        aria-label="Breadcrumbs navigation"
+        color="neutral"
+        *ngIf="_breadcrumbs.length > 1"
+      >
+        <a
+          *ngFor="let crumb of _breadcrumbs"
+          [routerLink]="crumb.url"
+          dtBreadcrumbsItem
+        >
+          {{ crumb.label }}
+        </a>
+      </dt-breadcrumbs>
+    </dt-top-bar-navigation-item>
+  </dt-top-bar-navigation>
+
+  <main class="tk-main">
+    <router-outlet></router-outlet>
+  </main>
+</dt-sidenav-container>

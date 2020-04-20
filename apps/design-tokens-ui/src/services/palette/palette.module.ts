@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+import { NgModule } from '@angular/core';
+import { PaletteSourceService } from './palette-source.service';
+
+@NgModule({
+  providers: [PaletteSourceService],
+})
+export class PaletteServicesModule {}

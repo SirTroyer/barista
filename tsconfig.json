@@ -207,14 +207,23 @@
       "@dynatrace/shared/barista-definitions": [
         "libs/shared/barista-definitions/src/index.ts"
       ],
-      "@environments/*": ["environments/*.ts"],
+      "@dynatrace/shared/node": ["libs/shared/node/src/index.ts"],
       "@dynatrace/shared/design-tokens": [
         "libs/shared/design-tokens/src/index.ts"
       ],
       "@dynatrace/fluid-design-tokens": [
         "libs/shared/design-tokens/generated/index.ts"
       ],
-      "@dynatrace/shared/node": ["libs/shared/node/src/index.ts"]
+      "@dynatrace/fluid-design-tokens/meta/aliases/*": [
+        "libs/shared/design-tokens/generated/aliases/*.json"
+      ],
+      "@dynatrace/fluid-design-tokens/meta/global/*": [
+        "libs/shared/design-tokens/generated/global/*.json"
+      ],
+      "@dynatrace/fluid-design-tokens/meta/patterns/*": [
+        "libs/shared/design-tokens/generated/patterns/*.json"
+      ],
+      "@environments/*": ["environments/*.ts"]
     },
     "plugins": [
       {

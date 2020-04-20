@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-export * from './lib/contrast-colors';
+module.exports = {
+  name: 'design-tokens-ui',
+  preset: '../../jest.config.js',
+  coverageDirectory: '../../coverage/apps/design-tokens-ui',
+  snapshotSerializers: [
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
+    'jest-preset-angular/build/AngularSnapshotSerializer.js',
+    'jest-preset-angular/build/HTMLCommentSerializer.js',
+  ],
+};
