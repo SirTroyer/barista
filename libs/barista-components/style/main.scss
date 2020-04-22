@@ -22,3 +22,5 @@
 // indicator styles import because the indicator is a directive
 // and cannot be shipped with styles
 @import '../core/src/indicator/indicator';
+
+@import './themes';
