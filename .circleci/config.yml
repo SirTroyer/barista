@@ -233,7 +233,7 @@ jobs:
     parallelism: 4
     steps:
       - prepare_job
-      - run: yarn run-many --target build --configuration production --increasedMemory 8192
+      - run: yarn run-many --target build --configuration production --increasedMemory 8192 --withDeps
       - persist_to_workspace:
           root: ~/barista
           paths:
@@ -263,8 +263,7 @@ jobs:
     parallelism: 3
     steps:
       - prepare_job
-      - run: yarn run-many --target test
-      # - run: yarn nx affected:test ${AFFECTED_ARGS} --parallel --runInBand
+      - run: yarn run-many --target test --args="--runInBand"
       - store_test_results:
           path: dist/test-results
 

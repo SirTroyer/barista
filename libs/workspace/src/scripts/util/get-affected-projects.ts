@@ -17,10 +17,17 @@
 import { execSync } from 'child_process';
 
 /** Get a list of affected libraries with the target */
-export function getAffectedProjects(baseSha: string, target: string): string[] {
-  const affected = execSync(
-    `npx nx print-affected --base=${baseSha} --target=${target}`,
-  )
+export function getAffectedProjects(
+  baseSha: string,
+  target?: string,
+): string[] {
+  const command = [`npx nx print-affected`, `--base=${baseSha}`];
+
+  if (target) {
+    command.push(`--target=${target}`);
+  }
+
+  const affected = execSync(command.join(' '))
     .toString()
     .trim();
 

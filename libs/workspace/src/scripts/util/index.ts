@@ -15,4 +15,5 @@
  */
 
 export * from './get-affected-projects';
+export * from './group-by-dependencies';
 export * from './split-array-into-chunks';

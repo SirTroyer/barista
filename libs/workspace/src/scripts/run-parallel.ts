@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
+import { tryJsonParse } from '@dynatrace/shared/node';
 import { grey } from 'chalk';
 import { execSync } from 'child_process';
+import { resolve } from 'path';
 import { options } from 'yargs';
 import { affectedArgs } from './affected-args';
-import { getAffectedProjects, splitArrayIntoChunks } from './util';
+import {
+  getAffectedProjects,
+  splitArrayIntoChunks,
+  groupByDependencies,
+} from './util';
+
+const NX_META = resolve('dist/nxdeps.json');
 
 /**
  * options to pass to the script:
@@ -27,30 +35,70 @@ import { getAffectedProjects, splitArrayIntoChunks } from './util';
  * --withDeps
  */
 export async function runParallel(): Promise<string> {
-  const { CIRCLE_NODE_INDEX = '0', CIRCLE_NODE_TOTAL = '4' } = process.env;
-  const currentNode = parseInt(CIRCLE_NODE_INDEX, 10);
-  const totalNodes = parseInt(CIRCLE_NODE_TOTAL, 10);
+  const { CIRCLE_NODE_INDEX, CIRCLE_NODE_TOTAL } = process.env;
+  const currentNode = +(CIRCLE_NODE_INDEX || 0);
+  const totalNodes = +(CIRCLE_NODE_TOTAL || 1);
 
   const {
-    target,
+    args,
     configuration,
-    withDeps,
-    parallel,
+    exclude,
     increasedMemory,
+    parallel,
+    target,
+    withDeps,
   } = options({
     target: { type: 'string', alias: 't', demandOption: true },
     configuration: { type: 'string', alias: 'c' },
-    exclude: { type: 'string', alias: 'e' },
+    exclude: {
+      type: 'string',
+      alias: 'e',
+      description: 'Comma separated list of projects that should be excluded',
+    },
     parallel: { type: 'boolean', default: true, alias: 'p' },
     withDeps: { type: 'boolean', alias: 'd' },
-    increasedMemory: { type: 'number', alias: 'm' },
+    args: {
+      type: 'string',
+      alias: 'a',
+      description:
+        'List of additional args that should be passed to the command',
+    },
+    increasedMemory: {
+      type: 'number',
+      alias: 'm',
+      description: 'Number of MB for the node process',
+    },
   }).argv;
 
   const baseSha = await affectedArgs();
-  const projects = getAffectedProjects(baseSha, target);
-  const chunkSize = Math.floor(projects.length / totalNodes);
-  // split the projects into chunks
-  const chunks = splitArrayIntoChunks(projects, chunkSize);
+  const blackList = exclude?.split(',') ?? [];
+  const projects = getAffectedProjects(baseSha, target).filter(
+    project => !blackList.includes(project),
+  );
+  const chunkSize = Math.ceil(projects.length / totalNodes);
+
+  let chunks: string[][];
+
+  if (withDeps) {
+    // The nx meta gets generated through the print-affected command
+    // that is executed via the `getAffectedProjects`
+    const nxMeta = await tryJsonParse<any>(NX_META);
+    const nxDependencies = nxMeta.projectGraph.dependencies;
+
+    const projectsWithDependencies = projects.map(project => {
+      const deps = nxDependencies[project]
+        .map(dep => dep.target)
+        .filter(dep => projects.includes(dep));
+      return {
+        project,
+        deps,
+      };
+    });
+    chunks = groupByDependencies(projectsWithDependencies, chunkSize);
+  } else {
+    chunks = splitArrayIntoChunks(projects, chunkSize);
+  }
+
   const currentChunk = chunks[currentNode].join(',');
 
   const flags = [
@@ -67,8 +115,8 @@ export async function runParallel(): Promise<string> {
     flags.push(`--configuration="${configuration}"`);
   }
 
-  if (withDeps) {
-    flags.push(`--with-deps`);
+  if (args) {
+    flags.push(args);
   }
 
   const baseCommand = ['node'];
