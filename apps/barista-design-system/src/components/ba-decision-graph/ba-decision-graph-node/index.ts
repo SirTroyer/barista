@@ -15,4 +15,4 @@
  */
 
 export * from './ba-decision-graph-node';
-export * from './ba-decision-graph-node-navigation';
+export * from './ba-decision-graph-node-navigation/ba-decision-graph-node-navigation';

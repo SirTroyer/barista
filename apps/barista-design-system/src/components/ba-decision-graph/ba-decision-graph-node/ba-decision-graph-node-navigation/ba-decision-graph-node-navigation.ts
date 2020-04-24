@@ -17,7 +17,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'ba-decision-graph-node-navigation',
+  selector: 'ba-decision-graph-node-nav',
   templateUrl: 'ba-decision-graph-node-navigation.html',
   styleUrls: ['ba-decision-graph-node-navigation.scss'],
 })

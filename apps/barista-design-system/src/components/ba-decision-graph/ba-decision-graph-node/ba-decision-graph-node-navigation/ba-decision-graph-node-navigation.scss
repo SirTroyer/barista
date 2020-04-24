@@ -3,13 +3,13 @@
 
 .ba-uxd-navigation-wrapper {
   width: 100%;
-  margin: 0 auto;
   margin-top: 32px;
 }
 
 @media only screen and (min-width: $screen-lg) {
   .ba-uxd-navigation-wrapper {
     width: 76%;
+    margin: 32px auto 0;
   }
 }
 
@@ -37,8 +37,6 @@
   border-radius: 3px;
   padding: 0 15px;
   margin-right: 8px;
-
-  // Make anchors render like buttons.
   white-space: nowrap;
   text-decoration: none;
   text-align: center;

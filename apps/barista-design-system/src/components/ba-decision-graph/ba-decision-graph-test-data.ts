@@ -53,3 +53,17 @@ export const nodes: BaUxdNode[] = [
     path: [],
   },
 ];
+
+export const wrongIdNode: BaUxdNode = {
+  id: 5,
+  order: 0,
+  start: false,
+  tasknode: false,
+  path: [
+    {
+      uxd_node: 6,
+      text: 'got it',
+    },
+  ],
+  text: 'wrong node',
+};

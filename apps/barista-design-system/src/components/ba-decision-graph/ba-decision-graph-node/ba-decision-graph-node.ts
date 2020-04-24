@@ -35,29 +35,28 @@ import { cloneDeep } from 'lodash';
 })
 export class BaDecisionGraphNode implements AfterViewInit {
   @Input()
-  set startnode(startnode: BaUxdNode) {
-    this._startnode = startnode;
+  set node(node: BaUxdNode) {
+    this._node = node;
     this.resetProgress();
-    this._decisionGraphSteps.push(cloneDeep(startnode));
+    this._decisionGraphSteps.push(cloneDeep(node));
   }
 
   /** Startnode picked from the user */
-  _startnode: BaUxdNode | undefined;
+  _node: BaUxdNode | undefined;
 
   /** Array of all nodes and edges */
   @Input()
   decisionGraphData: BaUxdNode[] = [];
 
+  /** Emits when user wants to start over */
   @Output('startOver')
   startOver = new EventEmitter<void>();
 
+  /** List of elementrefs containing displayed nodes */
   @ViewChildren('nodes') nodes: QueryList<ElementRef>;
 
   /** @internal Array of all nodes and edges which should be displayed */
   _decisionGraphSteps: BaUxdNode[] = [];
-
-  /** @internal Tasknode to be displayed */
-  _tasknode: BaUxdNode | undefined;
 
   /** @internal Whether the Undo button in template is displayed */
   _started: boolean = false;
@@ -75,33 +74,31 @@ export class BaDecisionGraphNode implements AfterViewInit {
    * @param nextNodeId Next node id to be displayed
    */
   setNextNode(selectedEdge: BaUxdEdge): void {
-    this._decisionGraphSteps[this._decisionGraphSteps.length - 1].path.map(
-      edge => {
-        edge.selected = edge.text === selectedEdge.text;
-      },
-    );
     // Finds next node to display by comparing the id reference to a node, in the edge.
     const nextNode = this.decisionGraphData.find(node => {
       return node.id === selectedEdge.uxd_node;
     });
-    if (nextNode) {
-      if (!nextNode.tasknode) {
-        this._decisionGraphSteps.push(cloneDeep(nextNode));
-      } else if (nextNode.tasknode) {
-        this._tasknode = nextNode;
-      }
+    if (
+      nextNode &&
+      this._decisionGraphSteps[this._decisionGraphSteps.length - 1].id !==
+        nextNode.id
+    ) {
+      this._decisionGraphSteps[this._decisionGraphSteps.length - 1].path.map(
+        edge => {
+          edge.selected = edge.text === selectedEdge.text;
+        },
+      );
+      this._decisionGraphSteps.push(cloneDeep(nextNode));
+      this.nodes.last.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this._started = true;
     } else {
       console.error(`Next node not found. Node id: ${selectedEdge.uxd_node}`);
     }
-
-    this.nodes.last.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    this._started = true;
   }
 
   /** Resets user decisions and decisionsarray */
   resetProgress(): void {
     this._decisionGraphSteps = [];
-    this._tasknode = undefined;
     this._started = false;
   }
 
@@ -114,11 +111,6 @@ export class BaDecisionGraphNode implements AfterViewInit {
   /** Removes the last step in the decisionGraphSteps array */
   undoLastStep(): void {
     // Set edge states to undefined because steps array is modified
-    if (this._tasknode) {
-      this.setSelectedStateOfEdge(this._decisionGraphSteps.length - 1);
-      this._tasknode = undefined;
-      return;
-    }
     this.setSelectedStateOfEdge(this._decisionGraphSteps.length - 2);
     this._decisionGraphSteps.splice(this._decisionGraphSteps.length - 1);
     this.nodes.last.nativeElement.scrollIntoView({ behavior: 'smooth' });
@@ -144,10 +136,11 @@ export class BaDecisionGraphNode implements AfterViewInit {
     return this._sanitizer.bypassSecurityTrustHtml(nodeText);
   }
 
+  /** Whether last node is a tasknode */
   isTasknode(): boolean {
-    if (this._tasknode) {
-      return true;
-    }
-    return false;
+    return (
+      this._decisionGraphSteps[this._decisionGraphSteps.length - 1].tasknode ===
+      true
+    );
   }
 }

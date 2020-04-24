@@ -15,17 +15,17 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { BaDecisionGraphNode } from './ba-decision-graph-node';
-import { nodes } from '../ba-decision-graph-test-data';
-import { BaDecisiongraphNodeNavigation } from './ba-decision-graph-node-navigation';
+import { nodes, wrongIdNode } from '../ba-decision-graph-test-data';
+import { BaDecisiongraphNodeNavigation } from './';
+import { dispatchFakeEvent } from '@dynatrace/testing/browser';
 
 describe('BaDecisionGraphNode', () => {
   let component: BaDecisionGraphNode;
   let fixture: ComponentFixture<BaDecisionGraphNode>;
-  // scrollIntoView is not supported by JSDOM yet.
-  // This workaround creates a function on HTMLElements.
-  // Works even with error
+  // scrollIntoView is not supported by jest yet.
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
   beforeEach(async(() => {
@@ -37,11 +37,121 @@ describe('BaDecisionGraphNode', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(BaDecisionGraphNode);
     component = fixture.componentInstance;
-    component.startnode = nodes[0];
+    component.node = nodes[1];
+    component.decisionGraphData = nodes;
     fixture.detectChanges();
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set next node to decisiongraph steps', () => {
+    expect(component._decisionGraphSteps.length).toBe(1);
+    const buttonElement = fixture.debugElement.query(By.css('.ba-uxd-yes-edge'))
+      .nativeElement;
+    dispatchFakeEvent(buttonElement, 'click');
+    fixture.detectChanges();
+    expect(component._decisionGraphSteps.length).toBe(2);
+  });
+
+  it('should undo last step', () => {
+    expect(component._decisionGraphSteps.length).toBe(1);
+    const buttonElement = fixture.debugElement.query(By.css('.ba-uxd-yes-edge'))
+      .nativeElement;
+    dispatchFakeEvent(buttonElement, 'click');
+    fixture.detectChanges();
+    expect(component._decisionGraphSteps.length).toBe(2);
+    const backButtonElement = fixture.debugElement.query(By.css('#uxdgBack'))
+      .nativeElement;
+    dispatchFakeEvent(backButtonElement, 'click');
+    expect(component._decisionGraphSteps.length).toBe(1);
+  });
+
+  it('should set edge state to undefined', () => {
+    expect(component._decisionGraphSteps[0].path[0].selected).not.toBeDefined();
+    const buttonElement = fixture.debugElement.query(By.css('.ba-uxd-yes-edge'))
+      .nativeElement;
+    dispatchFakeEvent(buttonElement, 'click');
+    fixture.detectChanges();
+    expect(component._decisionGraphSteps[0].path[0].selected).toBe(true);
+    component.setSelectedStateOfEdge(0);
+    fixture.detectChanges();
+    expect(component._decisionGraphSteps[0].path[0].selected).toBe(undefined);
+  });
+
+  it('should reset progress when start over button is clicked', () => {
+    const buttonElement = fixture.debugElement.query(By.css('.ba-uxd-yes-edge'))
+      .nativeElement;
+    dispatchFakeEvent(buttonElement, 'click');
+    expect(component._decisionGraphSteps.length).toBe(2);
+    const startOverElement = fixture.debugElement.query(
+      By.css('#uxdgStartover'),
+    ).nativeElement;
+    dispatchFakeEvent(startOverElement, 'click');
+    expect(component._decisionGraphSteps.length).toBe(0);
+  });
+
+  it('should remove tasknode on undostep', () => {
+    component.node = nodes[2];
+    fixture.detectChanges();
+    const buttonElement = fixture.debugElement.query(
+      By.css('.ba-uxd-edge-button'),
+    ).nativeElement;
+    dispatchFakeEvent(buttonElement, 'click');
+    fixture.detectChanges();
+    expect(
+      component._decisionGraphSteps[component._decisionGraphSteps.length - 1]
+        .tasknode,
+    ).toBe(true);
+    const backButtonElement = fixture.debugElement.query(
+      By.css('#uxdgBackTask'),
+    ).nativeElement;
+    dispatchFakeEvent(backButtonElement, 'click');
+    expect(
+      component._decisionGraphSteps[component._decisionGraphSteps.length - 1]
+        .tasknode,
+    ).not.toBe(true);
+  });
+
+  it('should return console error when node id is wrong', () => {
+    component.node = wrongIdNode;
+    fixture.detectChanges();
+    expect(component._decisionGraphSteps.length).toBe(1);
+    dispatchFakeEvent(
+      fixture.debugElement.query(By.css('.ba-uxd-edge-button')).nativeElement,
+      'click',
+    );
+    expect(component._decisionGraphSteps.length).toBe(1);
+  });
+
+  it('should set started to false when steps array is lower than 2', () => {
+    expect(component._started).toBe(false);
+    component._decisionGraphSteps.push(nodes[0]);
+    fixture.detectChanges();
+    dispatchFakeEvent(
+      fixture.debugElement.query(By.css('.ba-uxd-yes-edge')).nativeElement,
+      'click',
+    );
+    fixture.detectChanges();
+    expect(component._started).toBe(true);
+    component.undoLastStep();
+    component.undoLastStep();
+    expect(component._started).toBe(false);
+  });
+
+  it('should set if next node is tasknode', () => {
+    component.resetToInitial();
+    component.node = nodes[2];
+    fixture.detectChanges();
+    dispatchFakeEvent(
+      fixture.debugElement.query(By.css('.ba-uxd-edge-button')).nativeElement,
+      'click',
+    );
+    fixture.detectChanges();
+    expect(
+      component._decisionGraphSteps[component._decisionGraphSteps.length - 1]
+        .tasknode,
+    ).toBe(true);
   });
 });

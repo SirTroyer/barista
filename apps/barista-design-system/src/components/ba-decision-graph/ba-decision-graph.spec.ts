@@ -30,6 +30,8 @@ import { BaDecisionGraphStartnode } from './ba-decision-graph-start-node';
 describe('BaDecisionGraph', () => {
   let component: BaDecisionGraph;
   let fixture: ComponentFixture<BaDecisionGraph>;
+  // scrollIntoView is not supported by jest yet.
+  window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,5 +55,22 @@ describe('BaDecisionGraph', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get startnodes from data', () => {
+    component.getStartNodes();
+    expect(component._decisionGraphStartnodes).toStrictEqual([nodes[0]]);
+  });
+
+  it('should set node upon selection of a startnode', () => {
+    component.getStartNodes();
+    component.setSelectedNode(component._decisionGraphStartnodes[0]);
+    fixture.detectChanges();
+    expect(component._selectedNode).toStrictEqual(nodes[1]);
+  });
+
+  it('should reset selectedNode', () => {
+    component.resetToInitial();
+    expect(component._selectedNode).not.toBeDefined();
   });
 });

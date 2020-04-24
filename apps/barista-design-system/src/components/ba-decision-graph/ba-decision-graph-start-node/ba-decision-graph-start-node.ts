@@ -51,9 +51,7 @@ export class BaDecisionGraphStartnode {
     this.startnodeSelected.emit(this._selectedStartnode);
   }
 
-  /**
-   * Checks which startnode was selected.
-   */
+  /** Checks which startnode was selected. */
   isSelectedStartnode(index: number): boolean {
     return (
       this.decisionGraphStartnodes.indexOf(this._selectedStartnode) === index

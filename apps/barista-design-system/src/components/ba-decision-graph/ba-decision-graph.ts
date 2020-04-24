@@ -25,8 +25,6 @@ import { cloneDeep } from 'lodash';
   styleUrls: ['./ba-decision-graph.scss'],
 })
 export class BaDecisionGraph implements OnInit {
-  //TODO: Scroll to top when resetting to initial state
-
   /** Data from database */
   private _decisionGraphData$ = this._pageService._getPage('uxdg-data');
 
@@ -37,7 +35,7 @@ export class BaDecisionGraph implements OnInit {
   _decisionGraphStartnodes: BaUxdNode[] = [];
 
   /** @internal Contains the startnode the user has selected */
-  _selectedStartnode: BaUxdNode | undefined;
+  _selectedNode: BaUxdNode | undefined;
 
   constructor(private _pageService: BaPageService<any>) {}
 
@@ -59,7 +57,7 @@ export class BaDecisionGraph implements OnInit {
   }
 
   /** Sets the currently selected startnode when emitted from startnode component */
-  setSelectedStartnode(selectedStartnode: BaUxdNode): void {
+  setSelectedNode(selectedStartnode: BaUxdNode): void {
     let id;
     // skip first edge (not so sure).
     selectedStartnode.path.forEach(edge => {
@@ -67,13 +65,13 @@ export class BaDecisionGraph implements OnInit {
     });
     this._decisionGraphData.forEach(data => {
       if (data.id === id) {
-        this._selectedStartnode = cloneDeep(data);
+        this._selectedNode = cloneDeep(data);
       }
     });
   }
 
   /** Reset to initial state */
   resetToInitial(): void {
-    this._selectedStartnode = undefined;
+    this._selectedNode = undefined;
   }
 }

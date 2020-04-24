@@ -12,16 +12,29 @@
   outline: none;
 }
 
+:host ::ng-deep .ba-uxd-task-node a {
+  color: $turquoise-300;
+}
+
 :host ::ng-deep .ba-uxd-node-content p {
   margin-bottom: 0;
 }
 
 .ba-uxd-node-wrapper {
   width: 100%;
+
+  .ba-uxd-task-node-wrapper {
+    background-color: $royalblue-600;
+    margin-left: 4px;
+  }
+}
+
+.ba-uxd-node-container {
+  width: 100%;
 }
 
 @media only screen and (min-width: $screen-lg) {
-  .ba-uxd-node-wrapper {
+  .ba-uxd-node-container {
     width: 76%;
     margin: 0 auto;
   }
@@ -58,6 +71,7 @@
   min-width: 40px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-right: 32px;
   border-radius: 3px;
   border: none;
   color: $white;
@@ -76,12 +90,16 @@
   }
 }
 
+.ba-uxd-tasknode-edge-button {
+  border: 1px solid $royalblue-800;
+  margin-left: 5px;
+}
+
 .ba-uxd-yes-edge,
 .ba-uxd-no-edge {
   height: 44px;
   width: 44px;
   border-radius: 50%;
-  margin-right: 32px;
   margin-left: 0;
   padding: 0;
 }
@@ -93,35 +111,31 @@
   }
 }
 
-.ba-uxd-task-node-wrapper {
+.ba-uxd-tasknode-container {
   width: 100%;
   background-color: $royalblue-600;
   padding: 32px 0;
   margin-top: 32px;
 }
 
-.ba-uxd-task-node {
-  margin-left: 4px;
-}
-
-@media only screen and (min-width: $screen-lg) {
-  .ba-uxd-task-node {
-    width: 76%;
-    margin: 0 auto;
-  }
-}
-
-.ba-uxd-task-node-content {
+.ba-uxd-tasknode {
   width: 100%;
-  color: $white;
-  border-left: 2px solid $white;
   margin-left: 4px;
+  border-left: 2px solid $white;
   padding-left: 8px;
   padding-right: 8px;
 }
 
-@media only screen and (min-width: $screen-md) {
-  .ba-uxd-task-node-content {
+@media only screen and (min-width: $screen-lg) {
+  .ba-uxd-tasknode {
+    width: 76%;
+    margin: 0 auto;
     padding-left: 24px;
   }
+}
+
+.ba-uxd-tasknode-content {
+  width: 100%;
+  color: $white;
+  margin-left: 4px;
 }

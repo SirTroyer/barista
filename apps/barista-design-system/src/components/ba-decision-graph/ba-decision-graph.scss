@@ -1,4 +1,20 @@
+@import '../../styles/global/variables';
+
 :host ::ng-deep button {
   font-weight: 600;
   cursor: pointer;
+}
+
+.ba-uxd-title {
+  width: 100%;
+  text-align: center;
+  margin: 52px 0;
+  padding: 4px;
+}
+
+@media only screen and (min-width: $screen-md) {
+  .ba-uxd-title {
+    width: 76%;
+    margin: 72px auto 60px;
+  }
 }

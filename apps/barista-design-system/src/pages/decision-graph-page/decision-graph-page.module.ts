@@ -31,8 +31,6 @@ export const routes: Route[] = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [],
   declarations: [BaDecisionGraphPage, BaPageContent],
-  providers: [],
 })
 export class DecisionGraphPageModule {}

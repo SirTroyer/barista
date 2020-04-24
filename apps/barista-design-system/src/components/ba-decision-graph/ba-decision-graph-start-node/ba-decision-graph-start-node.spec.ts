@@ -15,8 +15,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BaDecisionGraphStartnode } from './ba-decision-graph-start-node';
+import { nodes } from '../ba-decision-graph-test-data';
 
 describe('BaDecisionGraphStartnode', () => {
   let component: BaDecisionGraphStartnode;
@@ -31,10 +31,20 @@ describe('BaDecisionGraphStartnode', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BaDecisionGraphStartnode);
     component = fixture.componentInstance;
+    component.decisionGraphStartnodes = [nodes[0]];
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return true', () => {
+    expect(component.decisionGraphStartnodes);
+  });
+
+  it('should select startnode', () => {
+    component.selectStartnode(nodes[0]);
+    expect(component._selectedStartnode).toStrictEqual(nodes[0]);
   });
 });
