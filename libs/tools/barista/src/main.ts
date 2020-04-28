@@ -122,7 +122,9 @@ async function buildPages(): Promise<void[]> {
 
   const allPages = await Promise.all(files);
   const overviewPages = await overviewBuilder();
-  await uxDecisionGraphGenerator(); // TODO: should this only be built for the internal version?
+  if (!isPublicBuild()) {
+    await uxDecisionGraphGenerator();
+  }
 
   const routes = sync(`${environment.distDir}/**/*.json`)
     .map(file => {

@@ -1,39 +1,41 @@
 <div class="ba-uxd-navigation-wrapper">
   <div class="ba-uxd-navigation">
-    <button
-      id="uxdgBack"
-      class="ba-uxd-navigation-button"
-      *ngIf="_showBackButton && !_inTasknode"
-      (click)="undoLastStep()"
-      dt-button
-      variant="secondary"
-    >
-      Back
-    </button>
-    <button
-      id="uxdgStartover"
-      class="ba-uxd-navigation-button"
-      *ngIf="!_inTasknode"
-      (click)="resetToInitial()"
-      dt-button
-    >
-      Reset progress
-    </button>
-    <button
-      id="uxdgBackTask"
-      class="ba-uxd-navigation-taskbutton"
-      *ngIf="_showBackButton && _inTasknode"
-      (click)="undoLastStep()"
-    >
-      Back
-    </button>
-    <button
-      id="uxdgStartoverTask"
-      class="ba-uxd-navigation-taskbutton ba-uxd-navigation-taskbutton-startover"
-      *ngIf="_inTasknode"
-      (click)="resetToInitial()"
-    >
-      Reset progess
-    </button>
+    <ng-container *ngIf="!_inTasknode">
+      <button
+        id="uxdgBack"
+        class="ba-uxd-navigation-button"
+        *ngIf="_showBackButton"
+        (click)="undoLastStep()"
+        dt-button
+        variant="secondary"
+      >
+        Back
+      </button>
+      <button
+        id="uxdgStartover"
+        class="ba-uxd-navigation-button"
+        (click)="resetToInitial()"
+        dt-button
+      >
+        Reset progress
+      </button>
+    </ng-container>
+    <ng-container *ngIf="_inTasknode">
+      <button
+        id="uxdgBackTask"
+        class="ba-uxd-navigation-taskbutton"
+        *ngIf="_showBackButton"
+        (click)="undoLastStep()"
+      >
+        Back
+      </button>
+      <button
+        id="uxdgStartoverTask"
+        class="ba-uxd-navigation-taskbutton ba-uxd-navigation-taskbutton-startover"
+        (click)="resetToInitial()"
+      >
+        Reset progess
+      </button>
+    </ng-container>
   </div>
 </div>

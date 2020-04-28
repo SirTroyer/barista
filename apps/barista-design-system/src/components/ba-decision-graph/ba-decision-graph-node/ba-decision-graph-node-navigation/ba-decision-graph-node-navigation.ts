@@ -34,8 +34,6 @@ export class BaDecisiongraphNodeNavigation {
   @Output()
   _resetToInitial = new EventEmitter<void>();
 
-  constructor() {}
-
   undoLastStep(): void {
     this._undoLastStep.emit();
   }
