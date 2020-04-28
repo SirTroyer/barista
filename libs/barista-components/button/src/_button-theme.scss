@@ -1,22 +1,28 @@
 
-.dt-color-warning {
-  --dt-theme-main-default-color: var(--dt-warning-default-color);
-  --dt-theme-main-hover-color: var(--dt-warning-hover-color);
-  --dt-theme-main-active-color: var(--dt-warning-active-color);
+.dt-button {
+  --dt-button-default-color: var(--dt-theme-main-default-color);
+  --dt-button-hover-color: var(--dt-theme-main-hover-color);
+  --dt-button-active-color: var(--dt-theme-main-active-color);
 }
 
-.dt-color-cta {
-  --dt-theme-main-default-color: var(--dt-cta-default-color);
-  --dt-theme-main-hover-color: var(--dt-cta-hover-color);
-  --dt-theme-main-active-color: var(--dt-cta-active-color);
+.dt-button.dt-color-warning {
+  --dt-button-default-color: var(--dt-warning-default-color);
+  --dt-button-hover-color: var(--dt-warning-hover-color);
+  --dt-button-active-color: var(--dt-warning-active-color);
+}
+
+.dt-button.dt-color-cta {
+  --dt-button-default-color: var(--dt-cta-default-color);
+  --dt-button-hover-color: var(--dt-cta-hover-color);
+  --dt-button-active-color: var(--dt-cta-active-color);
 }
 
 ////////////////////////////
 // Primary Button
 ////////////////////////////
 .dt-button-primary {
-  background: var(--dt-theme-main-default-color);
-  border-color: var(--dt-theme-main-default-color);
+  background: var(--dt-button-default-color);
+  border-color: var(--dt-button-default-color);
   color: #ffffff;
 
   .dt-button-icon .dt-icon svg {
@@ -25,14 +31,14 @@
 }
 
 .dt-button-primary:hover:not([disabled]) {
-  background: var(--dt-theme-main-hover-color);
-  border-color: var(--dt-theme-main-hover-color);
+  background: var(--dt-button-hover-color);
+  border-color: var(--dt-button-hover-color);
   color: #ffffff;
 }
 
 .dt-button-primary:active:not([disabled]) {
-  background: var(--dt-theme-main-active-color);
-  border-color: var(--dt-theme-main-active-color);
+  background: var(--dt-button-active-color);
+  border-color: var(--dt-button-active-color);
   color: #ffffff;
 }
 
@@ -69,29 +75,29 @@
 ////////////////////////////
 .dt-button-secondary {
   background: transparent;
-  border-color: var(--dt-theme-main-default-color);
-  color: var(--dt-theme-main-default-color);
+  border-color: var(--dt-button-default-color);
+  color: var(--dt-button-default-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-default-color);
+    fill: var(--dt-button-default-color);
   }
 }
 .dt-button-secondary:hover:not([disabled]) {
   background: $gray-100;
-  border-color: var(--dt-theme-main-hover-color);
-  color: var(--dt-theme-main-hover-color);
+  border-color: var(--dt-button-hover-color);
+  color: var(--dt-button-hover-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-hover-color);
+    fill: var(--dt-button-hover-color);
   }
 }
 .dt-button-secondary:active:not([disabled]) {
   background: $gray-100;
-  border-color: var(--dt-theme-main-active-color);
-  color: var(--dt-theme-main-active-color);
+  border-color: var(--dt-button-active-color);
+  color: var(--dt-button-active-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-active-color);
+    fill: var(--dt-button-active-color);
   }
 }
 .dt-button-secondary[disabled] {
@@ -154,17 +160,17 @@
 ////////////////////////////
 .dt-button-nested {
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-default-color);
+    fill: var(--dt-button-default-color);
   }
 }
 .dt-button-nested:hover:not([disabled]) {
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-hover-color);
+    fill: var(--dt-button-hover-color);
   }
 }
 .dt-button-nested:active:not([disabled]) {
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-active-color);
+    fill: var(--dt-button-active-color);
   }
 }
 .dt-button-nested[disabled] {
@@ -201,31 +207,31 @@
 .dt-color-warning.dt-button-secondary,
 .dt-color-cta.dt-button-secondary {
   background: transparent;
-  border-color: var(--dt-theme-main-default-color);
-  color: var(--dt-theme-main-default-color);
+  border-color: var(--dt-button-default-color);
+  color: var(--dt-button-default-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-default-color);
+    fill: var(--dt-button-default-color);
   }
 }
 .dt-color-warning.dt-button-secondary:hover:not([disabled]),
 .dt-color-cta.dt-button-secondary:hover:not([disabled]) {
   background: $gray-100;
-  border-color: var(--dt-theme-main-hover-color);
-  color: var(--dt-theme-main-hover-color);
+  border-color: var(--dt-button-hover-color);
+  color: var(--dt-button-hover-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-hover-color);
+    fill: var(--dt-button-hover-color);
   }
 }
 .dt-color-warning.dt-button-secondary:active:not([disabled]),
 .dt-color-cta.dt-button-secondary:active:not([disabled]) {
   background: $gray-100;
-  border-color: var(--dt-theme-main-active-color);
-  color: var(--dt-theme-main-active-color);
+  border-color: var(--dt-button-active-color);
+  color: var(--dt-button-active-color);
 
   .dt-button-icon .dt-icon svg {
-    fill: var(--dt-theme-main-active-color);
+    fill: var(--dt-button-active-color);
   }
 }
 
